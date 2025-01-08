@@ -165,7 +165,7 @@ local result = Max([1, 3, 2, 5, 4]); // => 5
 local result = MinBy([{n: 1, s: "a"}, {n: 2, s: "b"}], function(v) { return v.n; }); // => {n: 1, s: "a"}
 ```
 
-- Max(a)
+- Min(a)
 
 配列`a`の中で一番小さな要素を返します。
 
