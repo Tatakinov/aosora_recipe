@@ -176,5 +176,5 @@ function MinBy(a, f) {
 }
 
 function Min(a) {
-    return MaxBy(a, function(_, v) { return v; });
+    return MinBy(a, function(_, v) { return v; });
 }
