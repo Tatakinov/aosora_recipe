@@ -38,7 +38,7 @@ function __ForeachInternal(obj, internal, f, args) {
 function __ForeachInternalString(s, internal, f, args) {
     local ret = "";
     for (local i = 0; i < s.length; i++) {
-        ret = internal(ret, function(dest, i, v) {
+        ret = internal(ret, |dest, _, v| {
             dest += v;
             return dest;
         }, f, i, s.Substring(i, 1), args);
@@ -49,7 +49,7 @@ function __ForeachInternalString(s, internal, f, args) {
 function __ForeachInternalArray(a, internal, f, args) {
     local ret = [];
     for (local i = 0; i < a.length; i++) {
-        ret = internal(ret, function(dest, i, v) {
+        ret = internal(ret, |dest, _, v| {
             dest.Add(v);
             return dest;
         }, f, i, a[i], args);
@@ -61,7 +61,7 @@ function __ForeachInternalMap(m, f, args) {
     local ret = {};
     local keys = m.Keys();
     for (local i = 0; i < keys.length; i++) {
-        ret = internal(ret, function(dest, k, v) {
+        ret = internal(ret, |dest, k, v| {
             dest[k] = v;
             return dest;
         }, f, keys[i], m[keys[i]], args);
@@ -70,14 +70,14 @@ function __ForeachInternalMap(m, f, args) {
 }
 
 function Map(obj, f, args) {
-    return __ForeachInternal(obj, function(dest, add, f, k, v, args) {
+    return __ForeachInternal(obj, |dest, add, f, k, v, args| {
         dest = add(dest, k, f(k, v, args));
         return dest;
     }, f, args);
 }
 
 function Filter(obj, f, args) {
-    return __ForeachInternal(obj, function(dest, add, f, k, v, args) {
+    return __ForeachInternal(obj, |dest, add, f, k, v, args| {
         if (f(k, v, args)) {
             dest = add(dest, k, v);
         }
@@ -90,7 +90,7 @@ function Any(obj, f, args) {
 }
 
 function Contain(obj, args) {
-    return Any(obj, function(k, v, arg) { return v == arg; }, args);
+    return Any(obj, |_, v, arg| { v == arg; }, args);
 }
 
 function All(obj, f, args) {

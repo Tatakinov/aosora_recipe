@@ -12,11 +12,14 @@ function Range(a, b) {
 
 function Shuffle(a) {
     local ret = [];
-    local indexes = Range(0, a.length);
-    while (indexes.length > 0) {
-        local i = Random.Select(indexes);
+    for (local i = 0; i < a.length; i++) {
         ret.Add(a[i]);
-        indexes = Filter(indexes, function(i, v, arg) { return v != arg; }, i);
+    }
+    for (local i = a.length; i > 0; i--) {
+        local j = Random.GetIndex(0, i);
+        local tmp = ret[i - 1];
+        ret[i - 1] = ret[j];
+        ret[j] = tmp;
     }
     return ret;
 }
@@ -46,11 +49,11 @@ function Reverse(a) {
 }
 
 function Take(a, n) {
-    return Filter(a, function(i, v, arg) { return i < arg; }, n);
+    return Filter(a, |i, _, arg| { i < arg; }, n);
 }
 
 function Drop(a, n) {
-    return Filter(a, function(i, v, arg) { return !(i < arg); }, n);
+    return Filter(a, |i, _, arg| { !(i < arg); }, n);
 }
 
 function Slice(a, begin, end) {
@@ -66,14 +69,14 @@ function SumBy(a, f, args) {
 }
 
 function Sum(a) {
-    return SumBy(a, function(v) { return v; });
+    return SumBy(a, |v| { v; });
 }
 
 function Join(a, delim) {
     if (delim.IsNull()) {
         delim = "";
     }
-    local ret = SumBy(a, function(v, arg) { return v.ToString() + arg; }, delim);
+    local ret = SumBy(a, |v, arg| { v.ToString() + arg; }, delim);
     return ret.Substring(0, ret.length - delim.length);
 }
 
@@ -98,7 +101,7 @@ function DistinctBy(a, f) {
 }
 
 function Distinct(a) {
-    return DistinctBy(a, function(v) { return v; });
+    return DistinctBy(a, |v| { v; });
 }
 
 // Merge Sort
@@ -146,7 +149,7 @@ function SortBy(a, f) {
 }
 
 function Sort(a) {
-    return SortBy(a, function(a, b) { return a < b; });
+    return SortBy(a, |a, b| { a < b; });
 }
 
 function __CompareInternal(a, cond, f) {
@@ -164,17 +167,17 @@ function __CompareInternal(a, cond, f) {
 }
 
 function MaxBy(a, f) {
-    return __CompareInternal(a, function(a, b) { return a < b; }, f);
+    return __CompareInternal(a, |a, b| { a < b; }, f);
 }
 
 function Max(a) {
-    return MaxBy(a, function(_, v) { return v; });
+    return MaxBy(a, |_, v| { v; });
 }
 
 function MinBy(a, f) {
-    return __CompareInternal(a, function(a, b) { return a > b; }, f);
+    return __CompareInternal(a, |a, b| { a > b; }, f);
 }
 
 function Min(a) {
-    return MinBy(a, function(_, v) { return v; });
+    return MinBy(a, |_, v| { v; });
 }
