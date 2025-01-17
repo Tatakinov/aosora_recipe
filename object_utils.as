@@ -6,7 +6,7 @@ function Clone(obj) {
         }
         return ret;
     }
-    if (obj.InstanceOf(Object)) {
+    if (obj.InstanceOf(Map)) {
         local ret = {};
         local keys = obj.Keys();
         for (local i = 0; i < keys.length; i++) {
@@ -25,7 +25,7 @@ function __ForeachInternal(obj, internal, f, args) {
     else if (obj.InstanceOf(Array)) {
         suffix = "Array";
     }
-    else if (obj.InstanceOf(Object)) {
+    else if (obj.InstanceOf(Map)) {
         suffix = "Map";
     }
     else {
