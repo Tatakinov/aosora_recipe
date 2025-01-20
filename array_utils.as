@@ -77,6 +77,9 @@ function Join(a, delim) {
         delim = "";
     }
     local ret = SumBy(a, |v, arg| { v.ToString() + arg; }, delim);
+    if (ret.IsNull()) {
+        return "";
+    }
     return ret.Substring(0, ret.length - delim.length);
 }
 
