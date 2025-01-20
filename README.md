@@ -210,7 +210,7 @@ local b = Clone(a);
 b[0] = 5; // a => [1, 2, 3]
 ```
 
-- Map(obj, f[, args])
+- Mapping(obj, f[, args])
 
 オブジェクト`obj`の各要素に関数`f`を適用した結果を代入します。
 `args`は関数`f`の追加引数です。
