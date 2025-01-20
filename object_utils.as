@@ -69,7 +69,7 @@ function __ForeachInternalMap(m, f, args) {
     return ret;
 }
 
-function Map(obj, f, args) {
+function Mapping(obj, f, args) {
     return __ForeachInternal(obj, |dest, add, f, k, v, args| {
         dest = add(dest, k, f(k, v, args));
         return dest;
