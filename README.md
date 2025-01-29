@@ -138,7 +138,7 @@ local array = SortBy([1, 3, 2, 5, 4], function(a, b) { return a > b; }); // => [
 ソートは安定ソートです。
 
 ```
-local array = Sort([1, 3, 2, 5, 4], function(a, b) { return a > b; }); // => [1, 2, 3, 4, 5]
+local array = Sort([1, 3, 2, 5, 4]); // => [1, 2, 3, 4, 5]
 ```
 
 - MaxBy(a, f)
@@ -239,10 +239,9 @@ local array = Filter({t1: "a", t2: "b", u: "c"}, function(k, v, arg) { return k.
 local result = Any("12345", function(i, v) { return v.ToNumber() % 3 == 0; }); // => true
 ```
 
-- Contain(obj, args)
+- Contain(obj, arg)
 
-オブジェクト`obj`の要素に`args`が含まれていたら`true`、そうでなければ`false`を返します。
-`args`は関数`f`の追加引数です。
+オブジェクト`obj`の要素に`arg`が含まれていたら`true`、そうでなければ`false`を返します。
 
 ```
 local result = Contain([1, 2, 3, 4, 5], 3); // => true
