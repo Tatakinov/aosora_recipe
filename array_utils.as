@@ -128,7 +128,7 @@ function __SortInternal(a, begin, end, f) {
         }
     }
     if (b_i < b.length) {
-        for (; b_i < b.length; b++) {
+        for (; b_i < b.length; b_i++) {
             ret.Add(b[b_i]);
         }
     }
